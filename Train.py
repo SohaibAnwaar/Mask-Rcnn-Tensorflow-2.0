@@ -10,8 +10,16 @@ physical_devices = tf.config.list_physical_devices('GPU')
 for gpu_instance in physical_devices: 
     tf.config.experimental.set_memory_growth(gpu_instance, True)
 
+from tensorflow.compat.v1.keras.backend import set_session
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True  # dynamically grow the memory used on the GPU
+config.log_device_placement = True  # to log device placement (on which device the operation ran)
+sess = tf.compat.v1.Session(config=config)
+set_session(sess)
+
+
     
-    import os, glob
+import os, glob
 import sys
 import json
 import datetime
@@ -39,7 +47,7 @@ class GenericConfig(Config):
     """
 
     def __init__(self, classes, steps):
-        self.NUM_CLASSES = classes
+        self.NUM_CLASSES = classes + 1
         self.STEPS_PER_EPOCH = steps
         super().__init__()
 
@@ -130,7 +138,7 @@ class GenericDataset(utils.Dataset):
                 if _class not in classes:
                     classes += [_class]
 
-        for i in range(2000):
+        for i in range(len(classes)):
             self.add_class("class", i+1,  str(_class))
 
     def load_mask(self, image_id):
@@ -221,7 +229,7 @@ WEIGHTS_DIR = "/media/sohaib/additional_/maskrcnn2_0/weights"
 
 
 
-config = GenericConfig(2000, 100)
+config = GenericConfig(7, 100)
 
 model = modellib.MaskRCNN(mode="training", config=config, model_dir=WEIGHTS_DIR)
                 
