@@ -5,13 +5,10 @@ I decides to make a mask-rcnn compatible with tensorflow 2.0. I took help from a
 complicated to made a tensorflow code which is compatible with nvidia 3000 series. So I also made some changes to make this code run on my 3070rtx. So tighten your 
 seat belts, we are going to start our drive.
 
-# Introduction:
-Main Aim of this repository is to extract data from card like first_name, last_name, plate number, address etc
+
 
 # Making Dataset.
-I took data of driving license from google images these are most probably the fake cards but no problem I only take these images for learning. So First step is to
-annotate data I used VIA image annotator (https://www.robots.ox.ac.uk/~vgg/software/via/via-1.0.1.html) to annotate my data I make a rectangle against every object
-I need Like an Image below
+First step is to mannotate data I used VIA image annotator (https://www.robots.ox.ac.uk/~vgg/software/via/via-1.0.1.html) to annotate my data I make a rectangle against every object and save the project in json
 
 
 ## Augmentation:
